@@ -1,5 +1,5 @@
 import app from './src/server';
-process.loadEnvFile();
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
