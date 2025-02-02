@@ -1,4 +1,4 @@
-import { createUser, deleteUser, getUserById, updateUser, listUsers } from '../models/user';
+import { createUser, deleteUser, getUserById, updateUser, listUsers, getUserByEmail } from '../models/user';
 import { Request, Response } from 'express';
 import { tryit } from 'radashi';
 import { User } from '../interfaces/user';
@@ -17,7 +17,15 @@ const listUsersController = async (_req: Request, res: Response) => {
 const createUserController = async (req: Request, res: Response) => {
   const userData = req.body as unknown as User;
 
+  const userFound = await getUserByEmail(userData.email);
+
+  if (userFound !== null) {
+    res.status(400).json({ message: 'Email already exists' });
+    return;
+  }
+
   const [error, user] = await tryit(createUser)(userData);
+
   if (error) {
     res.status(400).json({ message: error.message });
     return;
