@@ -1,6 +1,6 @@
 import { createUser, deleteUser, getUserById, updateUser, listUsers, getUserByEmail } from '../models/user';
 import { Request, Response } from 'express';
-import { tryit } from 'radashi';
+import { omit, parallel, tryit } from 'radashi';
 import { User } from '../interfaces/user';
 
 const listUsersController = async (_req: Request, res: Response) => {
@@ -11,7 +11,11 @@ const listUsersController = async (_req: Request, res: Response) => {
     return;
   }
 
-  res.status(200).json(users);
+  const usersWithoutPassword = await parallel(5, users, async (user) => {
+    return omit(user, ['password']);
+  });
+
+  res.status(200).json(usersWithoutPassword);
 };
 
 const createUserController = async (req: Request, res: Response) => {
@@ -31,7 +35,7 @@ const createUserController = async (req: Request, res: Response) => {
     return;
   }
 
-  res.status(201).json(user);
+  res.status(201).json(omit(user, ['password']));
 };
 
 const getUserController = async (req: Request, res: Response) => {
@@ -48,7 +52,7 @@ const getUserController = async (req: Request, res: Response) => {
     return;
   }
 
-  res.status(200).json(user);
+  res.status(200).json(omit(user, ['password']));
 };
 
 const updateUserController = async (req: Request, res: Response) => {
@@ -62,7 +66,7 @@ const updateUserController = async (req: Request, res: Response) => {
     return;
   }
 
-  res.status(200).json(userUpdated);
+  res.status(200).json(omit(userUpdated, ['password']));
 };
 
 const deleteUserController = async (req: Request, res: Response) => {
