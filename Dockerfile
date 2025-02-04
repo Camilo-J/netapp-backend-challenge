@@ -9,10 +9,11 @@ COPY . /home/app
 # Set the working directory to /home/app
 WORKDIR /home/app
 
+# Install any needed packages specified in requirements.txt
 RUN bun install
 
-RUN bunx prisma migrate deploy
-
+# Make port 3001 available to the world outside this container
 EXPOSE 3001
 
+# Define environment variable
 CMD ["bun", "start"]
