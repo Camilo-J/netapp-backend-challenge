@@ -12,12 +12,12 @@ import 'dotenv/config';
 passportConfig(passport);
 const app = express();
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
 app.use(helmet());
 app.use(cookie());
 app.use(express.json());
 app.use(passport.initialize());
-app.use(morgan('dev'));
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use('/api/v1', router);
 
 const server = createServer(app);

@@ -125,25 +125,25 @@ const token = async (req: Request, res: Response) => {
 };
 
 const changePassword = async (req: Request, res: Response) => {
-  const { oldPassword, newPassword, userId } = req.body;
+  const { password, newPassword, userId } = req.body;
 
-  const user = await getUserById(userId);
+  const user = await getUserById(Number(userId));
 
-  if (user === null) {
+  if (!user) {
     res.status(400).json({ message: 'Invalid Credentials' });
     return;
   }
 
-  const passwordMatch = await comparePassword(oldPassword, user.password);
+  const passwordMatch = await comparePassword(password, user.password);
 
   if (!passwordMatch) {
-    res.status(400).json({ message: 'Invalid Credentials' });
+    res.status(400).json({ message: 'Invalid Password' });
     return;
   }
 
   const hashedPassword = await encryptPassword(newPassword);
 
-  const [error, _] = await tryit(updateUser)(userId, { password: hashedPassword } as User);
+  const [error, _] = await tryit(updateUser)(Number(userId), { password: hashedPassword } as User);
 
   if (error) {
     res.status(500).json({ message: 'Internal Server Error' });
