@@ -1,18 +1,17 @@
 FROM oven/bun:latest
 
-WORKDIR /app
+# Store the current working directory
+RUN mkdir -p /home/app
 
-COPY package.json ./
-COPY bun.lock ./
-COPY prisma ./prisma
-COPY src ./
-COPY index.ts ./
-COPY tsconfig.json ./
+# Copy the current directory contents into the container at /home/app
+COPY . /home/app
 
+# Set the working directory to /home/app
+WORKDIR /home/app
 
 RUN bun install
 
-RUN bunx prisma migrate && bunx prisma generate
+RUN bunx prisma migrate deploy
 
 EXPOSE 3001
 
