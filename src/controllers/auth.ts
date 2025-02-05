@@ -14,7 +14,7 @@ const register = async (req: Request, res: Response) => {
   const userFound = await getUserByEmail(userData.email);
 
   if (userFound !== null) {
-    res.status(400).json({ error: { message: 'Email already exists' } });
+    res.status(400).json({ message: 'Email already exists' });
     return;
   }
 
@@ -56,7 +56,7 @@ const login = async (req: Request, res: Response) => {
   const userFound = await getUserByEmail(userData.email);
 
   if (userFound === null) {
-    res.status(400).json({ error: { message: 'Invalid Credentials' } });
+    res.status(400).json({ message: 'Invalid Credentials' });
     return;
   }
 
