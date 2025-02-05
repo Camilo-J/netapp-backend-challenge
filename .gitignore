@@ -3,7 +3,8 @@ dist
 dist-ssr
 *.local
 .env
-.env.*
+.env.production
+.env.staging
 __tests__
 coverage
 # Editor directories and files

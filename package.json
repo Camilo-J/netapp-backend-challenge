@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun --watch index.ts",
-    "start": "bunx prisma migrate && bun index.ts"
+    "start": "bun index.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,11 +13,6 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.3.0",
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cookie-parser": "^1.4.8",
-    "@types/cors": "^2.8.17",
-    "@types/morgan": "^1.9.9",
-    "@types/passport-jwt": "^4.0.1",
     "bcryptjs": "^2.4.3",
     "cookie": "^1.0.2",
     "cookie-parser": "^1.4.7",
@@ -32,10 +27,15 @@
     "passport-jwt": "^4.0.1",
     "prisma": "^6.3.0",
     "radashi": "^12.3.4",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "ts-node": "^10.9.2"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/morgan": "^1.9.9",
+    "@types/passport-jwt": "^4.0.1"
   }
 }
